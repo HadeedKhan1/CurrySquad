@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yes or No Poll</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .poll-container {
+            text-align: center;
+        }
+
+        .question {
+            font-size: 20px;
+            margin-bottom: 20px;
+        }
+
+        .options {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .option-button {
+            font-size: 16px;
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+
+        .result {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="poll-container">
+    <div class="question">Let her back in (halal) or no (haram)</div>
+    <div class="options">
+        <button class="option-button" onclick="vote('yes')">Halal</button>
+        <button class="option-button" onclick="vote('no')">Haram</button>
+    </div>
+    <div class="result" id="result"></div>
+</div>
+
+<script>
+    // Check if the user has already voted
+    if (localStorage.getItem('hasVoted')) {
+        showResult();
+    }
+
+    function vote(option) {
+        // Check if the user has already voted
+        if (localStorage.getItem('hasVoted')) {
+            alert('You have already voted!');
+            return;
+        }
+
+        // Increment the selected option count
+        let optionCount = localStorage.getItem(option) || 0;
+        optionCount++;
+        localStorage.setItem(option, optionCount);
+
+        // Mark that the user has voted
+        localStorage.setItem('hasVoted', true);
+
+        // Display the results
+        showResult();
+    }
+
+    function showResult() {
+        const resultElement = document.getElementById('result');
+        const yesCount = localStorage.getItem('yes') || 0;
+        const noCount = localStorage.getItem('no') || 0;
+
+        resultElement.innerHTML = `Results: Halal - ${yesCount}, Haram - ${noCount}`;
+    }
+</script>
+
+</body>
+</html>
